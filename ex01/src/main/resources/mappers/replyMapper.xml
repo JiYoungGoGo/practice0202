@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="org.jy.persistence.ReplyDAO">
+  
+  <select id="list" resultType="org.jy.domain.ReplyVO">
+  select * from tbl_reply where bno =#{bno} and rno > 0 order by rno desc
+  
+  </select>
+  
+  <select id="listpage" resultType="org.jy.domain.ReplyVO">
+ <![CDATA[
+		select *
+		from(
+		select  rownum rn,rno,bno,replytext,replyer,regdate,updatedate from tbl_reply where rno>0 and bno=#{bno} and rownum<=#{cri.perPageNum}*#{cri.page}
+		order by rno desc
+		)
+		where rn>#{cri.perPageNum}*(#{cri.page}-1)
+  ]]>
+  </select>
+  
+  <select id="count" resultType="int">
+  
+  select count(*) from tbl_reply where bno = #{bno}
+  
+  </select>
+  
+  
+  <insert id="create">
+  <![CDATA[
+  insert into tbl_reply(rno,bno,replytext, replyer)
+values(seq_reply.nextval,#{bno},#{replyText},#{replyer})
+  ]]>
+  </insert>
+  
+  <update id="modify">
+  
+  update tbl_reply set replytext = #{replyText} where rno = #{rno}
+  
+  </update>
+  
+  <delete id="delete">
+  delete from tbl_reply where rno=#{rno}
+  </delete>
+  
+  </mapper>

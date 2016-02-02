@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.jy.persistence.BoardMapper">
+
+	<sql id="search">
+
+	</sql>
+
+
+<select id="maxBno" resultType="Integer">
+
+select max(bno) from tbl_board
+
+</select>
+
+
+<select id="listSearchCount" resultType="int">
+
+	select count(*) from tbl_board where bno>0
+	<if test="searchType != null">
+		<if test="searchType=='t'.toString()">
+		 and title like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType=='c'.toString()">
+		 and text like '%'||#{keyword}||'%'
+		</if>
+	
+		<if test="searchType=='w'.toString()">
+		 and writer like '%'||#{keyword}||'%'
+		</if>
+		
+		<if test="searchType=='tc'.toString()">
+		 and ( title like '%'||#{keyword}||'%'
+				or text like '%'||#{keyword}||'%'
+			)
+		</if>
+		<if test="searchType=='cw'.toString()">
+		 and ( text like '%'||#{keyword}||'%'
+				or writer like '%'||#{keyword}||'%'
+			)
+		</if>
+		<if test="searchType=='tw'.toString()">
+		 and ( title like '%'||#{keyword}||'%'
+				or writer like '%'||#{keyword}||'%'
+			)
+		</if>
+		<if test="searchType=='tcw'.toString()">
+		 and ( title like '%'||#{keyword}||'%'
+		 		or text like '%'||#{keyword}||'%'
+				or writer like '%'||#{keyword}||'%'
+			)
+		</if>
+		
+	</if>
+
+</select>
+
+
+	<select id="searchList" resultType="org.jy.domain.BoardVO">
+ <![CDATA[
+  select 
+  *
+	from (
+	select /*+INDEX_DESC(tbl_board pk_bno)*/ 
+	rownum rn , bno, title, text, writer from tbl_board where bno>0
+	]]>
+	
+	 <if test="searchType != null">
+		<if test="searchType=='t'.toString()">
+		 and title like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType=='c'.toString()">
+		 and text like '%'||#{keyword}||'%'
+		</if>
+	
+		<if test="searchType=='w'.toString()">
+		 and writer like '%'||#{keyword}||'%'
+		</if>
+		
+		<if test="searchType=='tc'.toString()">
+		 and ( title like '%'||#{keyword}||'%'
+				or text like '%'||#{keyword}||'%'
+			)
+		</if>
+		<if test="searchType=='cw'.toString()">
+		 and ( text like '%'||#{keyword}||'%'
+				or writer like '%'||#{keyword}||'%'
+			)
+		</if>
+		<if test="searchType=='tw'.toString()">
+		 and ( title like '%'||#{keyword}||'%'
+				or writer like '%'||#{keyword}||'%'
+			)
+		</if>
+		<if test="searchType=='tcw'.toString()">
+		 and ( title like '%'||#{keyword}||'%'
+		 		or text like '%'||#{keyword}||'%'
+				or writer like '%'||#{keyword}||'%'
+			)
+		</if>
+		
+	</if>
+	
+	<![CDATA[
+	 and rownum<=#{page}*#{perPageNum}
+	 ) 
+	 where rn> (#{page}-1) *#{perPageNum}
+ 	]]>
+	</select>
+
+
+	<select id="searchCount" resultType="int">
+	<![CDATA[
+		select count(*) from tbl_board where bno>0
+	]]>
+	</select>
+
+
+
+
+
+
+	<select id="allList" resultType="org.jy.domain.BoardVO">
+		select * from tbl_board order by
+		bno desc
+	</select>
+
+	<insert id="create">
+		insert into tbl_board (bno, title, text, writer)
+		values(seq_bno.nextval,#{title},#{text},#{writer})
+	</insert>
+
+	<select id="read" resultType="org.jy.domain.BoardVO">
+		select * from tbl_board where bno =
+		#{bno}
+	</select>
+
+	<update id="update">
+		update tbl_board set title=#{title},text=#{text}
+		where bno=#{bno}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_board where bno=#{bno}
+	</delete>
+
+
+
+
+	<select id="listPage" resultType="org.jy.domain.BoardVO">
+ <![CDATA[
+  select 
+  *
+	from (
+	select  /*+INDEX_DESC(tbl_board pk_bno)*/
+	rownum rn , bno, title, text, writer from tbl_board where bno>0 and rownum<#{page}*10) 
+	where rn> (#{page}-1) *10
+ ]]>
+
+	</select>
+
+	<select id="listCri" resultType="org.jy.domain.BoardVO">
+ <![CDATA[
+  select 
+  *
+	from (
+	select /*+INDEX_DESC(tbl_board pk_bno)*/ 
+	rownum rn , bno, title, text, writer from tbl_board where bno>0 and rownum<=#{page}*#{perPageNum}) 
+	where rn> (#{page}-1) *#{perPageNum}
+ ]]>
+
+	</select>
+
+	<select id="totalCount" resultType="int">
+		select count(*) from
+		tbl_board
+	</select>
+
+
+</mapper>
