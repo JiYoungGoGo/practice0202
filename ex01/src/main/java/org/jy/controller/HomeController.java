@@ -42,8 +42,10 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		
+
 		int a = 0202;
+
+		a+=1515;
 		
 		
 		//formattedDate 를 문자열 Jun Hyun~~~~~~~~~~~~~으로 바꾸어주었다.
