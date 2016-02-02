@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jy.domain.BoardVO;
 import org.jy.domain.Criteria;
+import org.jy.domain.SearchCriteria;
 
 public interface BoardService {
 
@@ -21,4 +22,9 @@ public interface BoardService {
 	
 	public int totalListCount() throws Exception;
 	
+	public List<BoardVO> searchList(SearchCriteria cri) throws Exception;
+	
+	public int listSearchCount(SearchCriteria cri) throws Exception;
+	
+	public Integer getRegentBno() throws Exception;
 }

@@ -27,6 +27,8 @@ public interface BoardMapper {
 	
 	public List<BoardVO> searchList(SearchCriteria cri) throws Exception;
 	
-	public int searchCount(SearchCriteria cri)throws Exception;
+	public int listSearchCount(SearchCriteria cri)throws Exception;
+	
+	public Integer maxBno() throws Exception;
 	
 }

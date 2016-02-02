@@ -80,9 +80,15 @@ public class BoardMapperImpl implements BoardMapper {
 	}
 
 	@Override
-	public int searchCount(SearchCriteria cri) throws Exception {
+	public int listSearchCount(SearchCriteria cri) throws Exception {
 		
-		return session.selectOne(namespace+".searchCount", cri);
+		return session.selectOne(namespace+".listSearchCount", cri);
+	}
+
+	@Override
+	public Integer maxBno() throws Exception {
+		
+		return session.selectOne(namespace+".maxBno");
 	}
 
 }

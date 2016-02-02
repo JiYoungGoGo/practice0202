@@ -34,11 +34,11 @@
 						<input type="text" name="keyword" id="keywordInput"
 							value="${cri.keyword }">
 						<button id="searchBtn">Search</button>
-						<button type="submit" class="btn btn-primary">글쓰기</button>
+						<button type="submit" id="newBtn">글쓰기</button>
 					</div>
 
 
-
+					<input type="hidden" id="page" value="${cri.page}">
 
 					<table class="table table-bordered">
 						<tr>
@@ -53,7 +53,7 @@
 							<tr>
 								<td>${list.bno }</td>
 								<td><a
-									href="/sboard/readPage${pageMaker.makeSearch(cri.page)}&bno=${list.bno}">${list.title }</a></td>
+									href="/sboard/read${pageMaker.makeSearch(cri.page)}&bno=${list.bno}">${list.title }</a></td>
 								<td>${list.writer }</td>
 								<!-- 날짜 들어가야 되는 자리 -->
 								<td>등록날짜</td>
@@ -72,7 +72,9 @@
 						<div class="pagination">
 
 							<c:if test="${pageMaker.prev }">
-								<li><a
+								<li>
+								
+								<a
 									href="list${pageMaker.makeSearch(pageMaker.startPage-1) }">&laquo;</a></li>
 							</c:if>
 
@@ -80,7 +82,7 @@
 								end="${pageMaker.endPage }" var="paging">
 								<li
 									<c:out value="${cri.page==paging?'class=active':'' }"/>>
-									<a href="list${pageMaker.makeSearch(paging) }">${paging }</a>
+									<a href="list${pageMaker.makeSearch(paging)}">${paging }</a>
 								</li>
 
 							</c:forEach>
@@ -112,24 +114,46 @@
 <%@include file="../include/footer.jsp"%>
 <script>
 	$(document).ready(function() {
-		$(".btn-primary").on("click", function() {
 
-			self.location = "/board/register";
-
+		var num = $('#page').val;
+		
+		console.log("num: "+num);
+		
+		$('#searchBtn').on("click", function(event){
+			//self.location="list"+"${pageMaker.makeQuery(num)}";
+			event.preventDefault();
+			self.location="list" 
+			+'${pageMaker.makeQuery(1)}'
+			+"&searchType="
+			+$("select option:selected").val()
+			+"&keyword="+$('#keywordInput').val();
+			
 		});
+		
+		$('#newBtn').on("click",function(event){
+			
+			self.location="register";
+			
+		});
+		
+		
+		var str = '${msg}';
+		console.log(str);
+
+		if (str == 'SUCCESS') {
+			alert("등록되었습니다.");
+			
+			
+		} else if (str == "MODIFY") {
+			alert("수정되었습니다. ");
+		} else if (str == 'DELETE') {
+			alert("삭제되었습니다. ");
+
+		}
+
+		
 	});
 
-	var str = '${msg}';
-	console.log(str);
-
-	if (str == 'SUCCESS') {
-		alert("등록되었습니다.");
-	} else if (str == "MODIFY") {
-		alert("수정되었습니다. ");
-	} else if (str == 'DELETE') {
-		alert("삭제되었습니다. ");
-
-	}
 
 	/* $(document).ready(function(){
 		

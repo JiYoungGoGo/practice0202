@@ -1,5 +1,7 @@
 package org.jy.controller;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import org.jy.domain.BoardVO;
@@ -26,14 +28,14 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	@RequestMapping(value="/register",method=RequestMethod.GET)
+	@RequestMapping(value="/register2",method=RequestMethod.GET)
 	public void registerGet(BoardVO board, Model model) throws Exception{
 		
 		logger.info("등록 GET 페이지에 들어왔다. ");
 		
 	}
 	
-	@RequestMapping(value="/register",method=RequestMethod.POST)
+	@RequestMapping(value="/register2",method=RequestMethod.POST)
 	public String registerPost(BoardVO board, RedirectAttributes rttr) throws Exception{
 		
 		logger.info("등록 POST 페이지에 들어왔다. ");
@@ -46,11 +48,12 @@ public class BoardController {
 		//model.addAttribute("result","SUCCESS");
 		
 		//return "/board/success";
-
+		
+	    
 		return "redirect:/board/listPage";
 	}
 	
-	@RequestMapping(value="/listPage", method=RequestMethod.GET)
+	@RequestMapping(value="/listPage2", method=RequestMethod.GET)
 	public void listPage(@ModelAttribute("cri")Criteria cri, Model model) throws Exception{
 		
 		logger.info("==========pageMaker 쓰는 List");
@@ -72,7 +75,7 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value="/listCri",method=RequestMethod.GET)
+	@RequestMapping(value="/listCri2",method=RequestMethod.GET)
 	public void listCriteria(Criteria cri, Model model) throws Exception{
 		
 		logger.info("Criteria로 페이징!! cri: "+cri);
@@ -82,7 +85,7 @@ public class BoardController {
 
 	}
 	
-	@RequestMapping(value="/list" , method=RequestMethod.GET)
+	@RequestMapping(value="/list2" , method=RequestMethod.GET)
 	public void listGet(Model model) throws Exception{
 		
 		logger.info("리스트 페이지에 들어왔다. ");
@@ -93,7 +96,7 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping(value="readPage", method=RequestMethod.GET)
+	@RequestMapping(value="readPage2", method=RequestMethod.GET)
 	public void readPage(@RequestParam("bno")int bno,@ModelAttribute("cri") Criteria cri, Model model) throws Exception{
 		
 		logger.info("================ cri 정보 물고 있는 read");
@@ -105,7 +108,7 @@ public class BoardController {
 	
 	
 	
-	@RequestMapping(value="/read", method=RequestMethod.GET)
+	@RequestMapping(value="/read2", method=RequestMethod.GET)
 	public void readGet(@RequestParam("bno") int bno, Model model) throws Exception{
 		
 		logger.info("게시물에 들어왔다. ");
@@ -120,7 +123,7 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping(value="/removePage", method=RequestMethod.POST)
+	@RequestMapping(value="/removePage2", method=RequestMethod.POST)
 	public String removePage(@RequestParam("bno")int bno, Criteria cri, RedirectAttributes rttr) throws Exception{
 		
 		logger.info("==================cri물고 있는 remove");
@@ -136,7 +139,7 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value="/remove", method=RequestMethod.POST)
+	@RequestMapping(value="/remove2", method=RequestMethod.POST)
 	public String removePost(@RequestParam("bno") int bno, RedirectAttributes rttr)throws Exception{
 		
 		logger.info("삭제하러 왔다. ");
@@ -151,7 +154,7 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping(value="/modifyPage",method=RequestMethod.GET)
+	@RequestMapping(value="/modifyPage2",method=RequestMethod.GET)
 	public void modifyPage(@RequestParam("bno")int bno, @ModelAttribute("cri")Criteria cri, Model model) throws Exception{
 		
 		logger.info("일단 Paging 하며 수정하는 페이지에 들어왔다. ");
@@ -162,7 +165,7 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping(value="/modifyPage", method=RequestMethod.POST)
+	@RequestMapping(value="/modifyPage2", method=RequestMethod.POST)
 	public String modifyPagePost(BoardVO vo, Criteria cri, RedirectAttributes rttr) throws Exception{
 		
 		logger.info("수정 post 처리 하려고 들어왔당");
@@ -182,7 +185,7 @@ public class BoardController {
 	
 	
 	
-	@RequestMapping(value="/modify", method=RequestMethod.GET)
+	@RequestMapping(value="/modify2", method=RequestMethod.GET)
 	public void modifyGet( @RequestParam("bno") int bno,Model model) throws Exception{
 		
 		logger.info("수정하러 왔다. GET");
@@ -195,7 +198,7 @@ public class BoardController {
 
 	}
 	
-	@RequestMapping(value="/modify" , method=RequestMethod.POST)
+	@RequestMapping(value="/modify2" , method=RequestMethod.POST)
 	public String modifyPost(BoardVO vo,RedirectAttributes rttr) throws Exception{
 		
 		logger.info("수정처리할라고 들어왔다POST");
