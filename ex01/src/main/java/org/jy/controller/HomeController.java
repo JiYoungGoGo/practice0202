@@ -48,7 +48,7 @@ public class HomeController {
 		return "home";
 	}
 	
-
+	//동일하게 고치는 우아아아아아아아아
 	
 	//이야이야이ㅑ이ㅑ이야ㅣ야이ㅑ이ㅑ이
 	
