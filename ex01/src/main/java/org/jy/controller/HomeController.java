@@ -42,11 +42,9 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-
-		int a = 0202;
-
-		a+=1515;
-		
+		int a = 15;
+		//ㅋㅋㅋ 개꿀잼이라능
+		a = 555555555;
 		
 		//formattedDate 를 문자열 Jun Hyun~~~~~~~~~~~~~으로 바꾸어주었다.
 		model.addAttribute("serverTime", "수정한홈컨트롤로" );
