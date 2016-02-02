@@ -1,7 +1,6 @@
 package org.jy.controller;
 
-import java.io.InputStream;
-import java.net.URL;
+
 import java.util.List;
 
 import org.jy.domain.BoardVO;
