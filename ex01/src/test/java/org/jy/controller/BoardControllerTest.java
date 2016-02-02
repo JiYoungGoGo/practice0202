@@ -14,7 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class BoardControllerTest {
 
 	
-	
+	//뭐냐면, 저장소 지정후에 시도해 보고 있는 것.
 	@Test
 	public void test() {
 		
